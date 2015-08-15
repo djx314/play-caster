@@ -15,3 +15,5 @@ Action.async(JfcParser.json) { implicit request =>
   ...
 }
 ```
+
+The code is base on play-json4s <https://github.com/tototoshi/play-json4s>. Thanks to @tototoshi .
