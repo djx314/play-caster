@@ -25,18 +25,18 @@ trait CasterJson {
     (header, _, _) => createBadResult(defaultParseErrorMessage)(header)
   }
 
-  protected def defaultTolerantBodyParser[A](name: String, maxLength: Int)(parser: (RequestHeader, Array[Byte]) => Xor[ParsingFailure, Json]): BodyParser[Json] =
+  protected def defaultTolerantBodyParser[A](name: String, maxLength: Int)(parser: (RequestHeader, Array[Byte]) => Either[ParsingFailure, Json]): BodyParser[Json] =
     tolerantBodyParser(name, maxLength)(parser)(defaultParseErrorHandler)
 
-  protected def tolerantBodyParser(name: String, maxLength: Int)(defaultParser: (RequestHeader, Array[Byte]) => Xor[ParsingFailure, Json])(parseErrorHandler: ParseErrorHandler): BodyParser[Json] =
+  protected def tolerantBodyParser(name: String, maxLength: Int)(defaultParser: (RequestHeader, Array[Byte]) => Either[ParsingFailure, Json])(parseErrorHandler: ParseErrorHandler): BodyParser[Json] =
     BodyParser(name + ", maxLength=" + maxLength) {
       request =>
 
-        val bodyParser: Iteratee[Array[Byte], Either[Result, Xor[Future[Result], Json]]] =
+        val bodyParser: Iteratee[Array[Byte], Either[Result, Either[Future[Result], Json]]] =
           Traversable.takeUpTo[Array[Byte]](maxLength).transform(
             Iteratee.consume[Array[Byte]]().map {
               bytes =>
-                defaultParser(request, bytes).leftMap {
+                defaultParser(request, bytes).left.map {
                   e => parseErrorHandler(request, bytes, e)
                 }
             }
@@ -44,14 +44,14 @@ trait CasterJson {
 
         bodyParser.mapM {
           case Left(tooLarge) => Future.successful(Left(tooLarge))
-          case Right(Xor.Left(badResult)) => badResult.map(Left.apply)
-          case Right(Xor.Right(body)) => Future.successful(Right(body))
+          case Right(Left(badResult)) => badResult.map(Left.apply)
+          case Right(Right(body)) => Future.successful(Right(body))
         }
     }
 
-  protected val defaultParser: (RequestHeader, Array[Byte]) => Xor[ParsingFailure, Json] = {
+  protected val defaultParser: (RequestHeader, Array[Byte]) => Either[ParsingFailure, Json] = {
     (request, bytes) =>
-      parse(new String(bytes, request.charset.getOrElse("utf-8")))
+      parse(new String(bytes, request.charset.getOrElse("utf-8"))).toEither
   }
 
   protected def createBadResult(msg: String): RequestHeader => Future[Result] = {

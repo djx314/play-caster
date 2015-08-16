@@ -10,10 +10,10 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
  */
 package object caster {
 
-  implicit def writeableOf_NativeJValue(implicit codec: Codec): Writeable[Json] =
+  implicit def writeableOf_JsonForCatsValue(implicit codec: Codec): Writeable[Json] =
     Writeable((jval: Json) => codec.encode(jval.noSpaces))
 
-  implicit def contentTypeOf_JsValue(implicit codec: Codec): ContentTypeOf[Json] =
+  implicit def contentTypeOf_JsonForCatsValue(implicit codec: Codec): ContentTypeOf[Json] =
     ContentTypeOf(Some(ContentTypes.JSON))
 
   object JfcParser extends CasterJson
