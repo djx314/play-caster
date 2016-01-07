@@ -32,12 +32,30 @@ trait Caster {
 
     val logger = Logger(BodyParsers.getClass)
 
-    def json[T: Decoder]: BodyParser[T] = json.mapM { json =>
+    def json[T: Decoder]: BodyParser[T] =/*json.mapM { json =>
       implicitly[Decoder[T]].decodeJson(json) match {
         case Xor.Left(e) => Future.failed(e)
         case Xor.Right(t) => Future.successful(t)
       }
-    }
+    }*/
+      BodyParser("json reader") { request =>
+        import play.api.libs.iteratee.Execution.Implicits.trampoline
+        json(request) mapFuture {
+          case Left(simpleResult) =>
+            Future.successful(Left(simpleResult))
+          case Right(jsValue) =>
+            implicitly[Decoder[T]].decodeJson(jsValue) match {
+              case Xor.Left(e) => createBadResult(e.getMessage)(request) map Left.apply
+              case Xor.Right(t) => Future.successful(Right(t))
+            }
+          /*map { a =>
+              Future.successful(Right(a))
+            } recoverTotal { jsError =>
+              val msg = s"Json validation error ${JsError.toFlatForm(jsError)}"
+              createBadResult(msg)(request) map Left.apply
+            }*/
+        }
+      }
 
     def json: BodyParser[Json] = json(DefaultMaxTextLength)
 
@@ -47,12 +65,19 @@ trait Caster {
       createBadResult("Expecting text/json or application/json body", UNSUPPORTED_MEDIA_TYPE)
     )
 
-    def tolerantJson[T: Decoder]: BodyParser[T] = tolerantJson.mapM { json =>
-      implicitly[Decoder[T]].decodeJson(json) match {
-        case Xor.Left(e) => Future.failed(e)
-        case Xor.Right(t) => Future.successful(t)
+    def tolerantJson[T: Decoder]: BodyParser[T] =
+      BodyParser("json reader") { request =>
+        import play.api.libs.iteratee.Execution.Implicits.trampoline
+        tolerantJson(request) mapFuture {
+          case Left(simpleResult) =>
+            Future.successful(Left(simpleResult))
+          case Right(jsValue) =>
+            implicitly[Decoder[T]].decodeJson(jsValue) match {
+              case Xor.Left(e) => createBadResult(e.getMessage)(request) map Left.apply
+              case Xor.Right(t) => Future.successful(Right(t))
+            }
+        }
       }
-    }
 
     def tolerantJson: BodyParser[Json] = tolerantJson(DefaultMaxTextLength)
 
@@ -95,7 +120,9 @@ trait Caster {
         ) mapFuture { bytes =>
           parser(request, bytes) match {
             case Left(e) =>
+              logger.info("22" * 100)
               logger.debug(errorMessage, e)
+              logger.info("11" * 100)
               createBadResult(errorMessage + ": " + e.getMessage)(request).map(Left(_))
             case Right(body) => Future successful Right(body)
           }
