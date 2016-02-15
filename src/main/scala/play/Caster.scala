@@ -3,7 +3,7 @@ package play.api.libs.caster
 import akka.stream.scaladsl.{Flow, Sink}
 import akka.util.ByteString
 import io.circe._
-import io.circe.{parse => parser}
+import io.circe.parser
 import cats.data.Xor
 import play.api.http._
 import play.api.http.Status._
