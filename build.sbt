@@ -8,6 +8,8 @@ scalaVersion := "2.11.7"
 
 crossScalaVersions := Seq("2.10.6", "2.11.7")
 
+scalacOptions ++= Seq("-feature", "-deprecation")
+
 libraryDependencies ++= {
   val playV = "2.5.0-RC1"
   val circeV = "0.3.0"
@@ -16,6 +18,7 @@ libraryDependencies ++= {
     "io.circe" %% "circe-generic" % circeV,
     "io.circe" %% "circe-parser" % circeV,
     "com.typesafe.play" %% "play" % playV % "provided",
+    "org.slf4j" % "slf4j-simple" % "1.7.13" % "test",
     "org.scalatest" %% "scalatest" % "2.2.5" % "test",
     "com.typesafe.play" %% "play-test" % playV % "test",
     "com.typesafe.play" %% "play-ws" % playV % "test",

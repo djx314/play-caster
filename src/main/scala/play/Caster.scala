@@ -3,7 +3,6 @@ package play.api.libs.caster
 import akka.stream.scaladsl.{Flow, Sink}
 import akka.util.ByteString
 import io.circe._
-import io.circe.parser
 import cats.data.Xor
 import play.api.http._
 import play.api.http.Status._
@@ -12,15 +11,14 @@ import play.api.Logger
 import play.api.libs.streams.Accumulator
 import play.api.mvc._
 import scala.concurrent.Future
-import scala.util.control.NonFatal
 
 trait Caster {
 
-  implicit def contentTypeOf_Json(implicit codec: Codec): ContentTypeOf[Json] = {
+  implicit def contentTypeOf_CirceJson(implicit codec: Codec): ContentTypeOf[Json] = {
     ContentTypeOf(Some(ContentTypes.JSON))
   }
 
-  implicit def writableOf_Json(implicit codec: Codec): Writeable[Json] = {
+  implicit def writableOf_CirceJson(implicit codec: Codec): Writeable[Json] = {
     Writeable(a => codec.encode(a.noSpaces))
   }
 
@@ -32,12 +30,7 @@ trait Caster {
 
     val logger = Logger(BodyParsers.getClass)
 
-    def json[T: Decoder]: BodyParser[T] =/*json.mapM { json =>
-      implicitly[Decoder[T]].decodeJson(json) match {
-        case Xor.Left(e) => Future.failed(e)
-        case Xor.Right(t) => Future.successful(t)
-      }
-    }*/
+    def json[T: Decoder]: BodyParser[T] =
       BodyParser("json reader") { request =>
         import play.api.libs.iteratee.Execution.Implicits.trampoline
         json(request) mapFuture {
@@ -48,12 +41,6 @@ trait Caster {
               case Xor.Left(e) => createBadResult(e.getMessage)(request) map Left.apply
               case Xor.Right(t) => Future.successful(Right(t))
             }
-          /*map { a =>
-              Future.successful(Right(a))
-            } recoverTotal { jsError =>
-              val msg = s"Json validation error ${JsError.toFlatForm(jsError)}"
-              createBadResult(msg)(request) map Left.apply
-            }*/
         }
       }
 

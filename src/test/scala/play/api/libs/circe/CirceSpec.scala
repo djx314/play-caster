@@ -8,25 +8,23 @@ import org.scalatest.concurrent.ScalaFutures
 import play.api.libs.ws._
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.caster.Conf._
-import scala.concurrent.Future
 import scala.concurrent.duration._
 
 class CirceSpec extends FlatSpec
     with ShouldMatchers
     with EitherValues
     with ScalaFutures
-    with BeforeAndAfter{
+    with BeforeAndAfterAll {
 
   val t = DurationInt(10).seconds
-  override implicit  val patienceConfig =
-  PatienceConfig(timeout = t)
+  override implicit  val patienceConfig = PatienceConfig(timeout = t)
 
-  before {
+  override def beforeAll = {
     println("staring test server")
     server.start()
   }
 
-  after {
+  override def afterAll = {
     println("stoping testing server")
     server.stop()
   }
