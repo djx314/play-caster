@@ -82,7 +82,7 @@ trait Caster {
       * Enforce the max length on the stream consumed by the given accumulator.
       */
     private def enforceMaxLength[A](request: RequestHeader, maxLength: Long, accumulator: Accumulator[ByteString, Either[Result, A]]): Accumulator[ByteString, Either[Result, A]] = {
-      val takeUpToFlow = Flow[ByteString].transform { () => new BodyParsers.TakeUpTo(maxLength) }
+      val takeUpToFlow = Flow.fromGraph(new BodyParsers.TakeUpTo(maxLength))
       import play.api.libs.concurrent.Execution.Implicits.defaultContext
       accumulator.through(takeUpToFlow).recoverWith {
         case _: BodyParsers.MaxLengthLimitAttained =>
