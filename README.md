@@ -1,4 +1,6 @@
 # play-caster -- play-jfc extension
+[![Build Status](https://travis-ci.org/scalax/play-caster.svg?branch=master)](https://travis-ci.org/scalax/play-caster)
+[![codecov.io](https://codecov.io/github/scalax/play-caster/coverage.svg?branch=master)](https://codecov.io/github/scalax/play-caster?branch=master)
 
 To use jfc with play, just import jfc dependencies and copy the code in this repository. Then
 ```scala
