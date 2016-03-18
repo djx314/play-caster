@@ -107,9 +107,7 @@ trait Caster {
         ) mapFuture { bytes =>
           parser(request, bytes) match {
             case Left(e) =>
-              logger.info("22" * 100)
               logger.debug(errorMessage, e)
-              logger.info("11" * 100)
               createBadResult(errorMessage + ": " + e.getMessage)(request).map(Left(_))
             case Right(body) => Future successful Right(body)
           }
