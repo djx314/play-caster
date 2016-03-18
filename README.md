@@ -1,4 +1,4 @@
-# play-caster -- play-jfc extension
+# A [playframework](https://playframework.com/) 2.5.0 extension for [circe](http://circe.io)
 [![Build Status](https://travis-ci.org/scalax/play-caster.svg?branch=master)](https://travis-ci.org/scalax/play-caster)
 [![codecov.io](https://codecov.io/github/scalax/play-caster/coverage.svg?branch=master)](https://codecov.io/github/scalax/play-caster?branch=master)
 
