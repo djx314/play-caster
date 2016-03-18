@@ -1,8 +1,6 @@
 package net.scalax.caster
 
-import io.circe.generic.auto._
-import io.circe.parser._
-import io.circe.syntax._
+import io.circe.generic.auto._, io.circe.syntax._, io.circe.parser._
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import play.api.libs.ws._
@@ -17,6 +15,7 @@ class CirceSpec extends FlatSpec
   with BeforeAndAfterAll {
 
   val t = DurationInt(10).seconds
+
   override implicit  val patienceConfig = PatienceConfig(timeout = t)
 
   override def beforeAll = {
