@@ -19,7 +19,7 @@ libraryDependencies ++= {
     "io.circe" %% "circe-parser" % circeV,
     "com.typesafe.play" %% "play" % playV % "provided",
     "org.slf4j" % "slf4j-simple" % "1.7.13" % "test",
-    "org.scalatest" %% "scalatest" % "2.2.5" % "test",
+    "org.scalatest" %% "scalatest" % "3.0.0-M16-SNAP1" % "test",
     "com.typesafe.play" %% "play-test" % playV % "test",
     "com.typesafe.play" %% "play-ws" % playV % "test",
     "com.typesafe.play" %% "play-akka-http-server-experimental" % playV % "test"
