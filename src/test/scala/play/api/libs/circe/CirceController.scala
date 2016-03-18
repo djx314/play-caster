@@ -1,8 +1,8 @@
-package play.api.libs.caster
+package net.scalax.caster
 
-import io.circe.generic.auto._
-import io.circe.syntax._
+import io.circe.generic.auto._, io.circe.syntax._
 import play.api._
+import play.api.libs.caster.Caster
 import play.api.mvc._
 
 object CirceController extends Controller with Caster {

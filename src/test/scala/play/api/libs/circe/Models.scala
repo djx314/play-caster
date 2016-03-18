@@ -1,4 +1,4 @@
-package play.api.libs.caster
+package net.scalax.caster
 
 case class Bar(bar: Int)
 case class Foo(foo: String, bar: Bar)
