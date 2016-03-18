@@ -11,10 +11,10 @@ import play.api.libs.caster.Conf._
 import scala.concurrent.duration._
 
 class CirceSpec extends FlatSpec
-    with ShouldMatchers
-    with EitherValues
-    with ScalaFutures
-    with BeforeAndAfterAll {
+  with Matchers
+  with EitherValues
+  with ScalaFutures
+  with BeforeAndAfterAll {
 
   val t = DurationInt(10).seconds
   override implicit  val patienceConfig = PatienceConfig(timeout = t)
