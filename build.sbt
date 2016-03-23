@@ -9,18 +9,20 @@ scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
-  val playV = "2.5.0"
-  val circeV = "0.3.0"
+  val playVersion = "2.5.0"
+  val circeVersion = "0.3.0"
+  val shapelessVersion = "2.3.0"
   Seq(
-    "io.circe" %% "circe-core" % circeV,
-    "io.circe" %% "circe-generic" % circeV,
-    "io.circe" %% "circe-parser" % circeV,
-    "com.typesafe.play" %% "play" % playV % "provided",
+    "io.circe" %% "circe-core" % circeVersion,
+    "io.circe" %% "circe-generic" % circeVersion exclude("com.chuusai", "shapeless" + scalaBinaryVersion.value),
+    "io.circe" %% "circe-parser" % circeVersion,
+    "com.chuusai" %% "shapeless" % shapelessVersion,
+    "com.typesafe.play" %% "play" % playVersion % "provided",
     "org.slf4j" % "slf4j-simple" % "1.7.13" % "test",
     "org.scalatest" %% "scalatest" % "3.0.0-M16-SNAP1" % "test",
-    "com.typesafe.play" %% "play-test" % playV % "test",
-    "com.typesafe.play" %% "play-ws" % playV % "test",
-    "com.typesafe.play" %% "play-akka-http-server-experimental" % playV % "test"
+    "com.typesafe.play" %% "play-test" % playVersion % "test",
+    "com.typesafe.play" %% "play-ws" % playVersion % "test",
+    "com.typesafe.play" %% "play-akka-http-server-experimental" % playVersion % "test"
   )
 }
 /*libraryDependencies := {
