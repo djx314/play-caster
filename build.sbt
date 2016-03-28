@@ -10,13 +10,13 @@ scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
   val playVersion = "2.5.0"
-  val circeVersion = "0.3.0"
-  val shapelessVersion = "2.3.0"
+  val circeVersion = "0.4.0-RC1"
+  //val shapelessVersion = "2.3.0"
   Seq(
     "io.circe" %% "circe-core" % circeVersion,
-    "io.circe" %% "circe-generic" % circeVersion exclude("com.chuusai", "shapeless" + scalaBinaryVersion.value),
+    "io.circe" %% "circe-generic" % circeVersion,//exclude("com.chuusai", "shapeless" + scalaBinaryVersion.value),
     "io.circe" %% "circe-parser" % circeVersion,
-    "com.chuusai" %% "shapeless" % shapelessVersion,
+    //"com.chuusai" %% "shapeless" % shapelessVersion,
     "com.typesafe.play" %% "play" % playVersion % "provided",
     "org.slf4j" % "slf4j-simple" % "1.7.13" % "test",
     "org.scalatest" %% "scalatest" % "3.0.0-M16-SNAP1" % "test",
