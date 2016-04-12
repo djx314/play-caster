@@ -10,7 +10,7 @@ scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
   val playVersion = "2.5.1"
-  val circeVersion = "0.4.0-RC1"
+  val circeVersion = "0.4.0"
   //val shapelessVersion = "2.3.0"
   Seq(
     "io.circe" %% "circe-core" % circeVersion,
