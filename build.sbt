@@ -9,7 +9,7 @@ scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
-  val playVersion = "2.5.1"
+  val playVersion = "2.5.2"
   val circeVersion = "0.4.1"
   //val shapelessVersion = "2.3.0"
   Seq(
