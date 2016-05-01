@@ -1,11 +1,26 @@
-organization := "play-caster"
+organization := "net.scalax"
+
+publishMavenStyle := true
+
+licenses := Seq("MIT" -> url("http://www.opensource.org/licenses/bsd-license.php"))
+
+homepage := Some(url("http://scalax.net/"))
+
+publishTo := {
+    Some("Sonatype Nexus" at "http://127.0.0.1:8081/repository/maven-releases/")
+}
+
+credentials += Credentials("Sonatype Nexus",
+  "127.0.0.1",
+  "admin",
+  "admin123"
+)
 
 name := "play-caster"
 
-version := "0.2.0"
+version := "0.2.1"
 
 scalaVersion := "2.11.8"
-//crossScalaVersions := Seq("2.10.6", "2.11.8")
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
@@ -14,7 +29,7 @@ libraryDependencies ++= {
   //val shapelessVersion = "2.3.0"
   Seq(
     "io.circe" %% "circe-core" % circeVersion,
-    "io.circe" %% "circe-generic" % circeVersion,//exclude("com.chuusai", "shapeless" + scalaBinaryVersion.value),
+    "io.circe" %% "circe-generic" % circeVersion,
     "io.circe" %% "circe-parser" % circeVersion,
     //"com.chuusai" %% "shapeless" % shapelessVersion,
     "com.typesafe.play" %% "play" % playVersion % "provided",
@@ -25,15 +40,3 @@ libraryDependencies ++= {
     "com.typesafe.play" %% "play-akka-http-server-experimental" % playVersion % "test"
   )
 }
-/*libraryDependencies := {
-  CrossVersion.partialVersion(scalaVersion.value) match {
-    // if scala 2.11+ is used, quasiquotes are merged into scala-reflect
-    case Some((2, scalaMajor)) if scalaMajor >= 11 =>
-      libraryDependencies.value
-    // in Scala 2.10, quasiquotes are provided by macro paradise
-    case Some((2, 10)) =>
-      libraryDependencies.value ++ Seq(
-        compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
-        "org.scalamacros" %% "quasiquotes" % "2.0.0" cross CrossVersion.binary)
-  }
-}*/
