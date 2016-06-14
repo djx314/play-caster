@@ -24,7 +24,7 @@ scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
-  val playVersion = "2.5.2"
+  val playVersion = "2.5.4"
   val circeVersion = "0.5.0-M1"
   //val shapelessVersion = "2.3.0"
   Seq(
@@ -34,7 +34,7 @@ libraryDependencies ++= {
     //"com.chuusai" %% "shapeless" % shapelessVersion,
     "com.typesafe.play" %% "play" % playVersion % "provided",
     "org.slf4j" % "slf4j-simple" % "1.7.13" % "test",
-    "org.scalatest" %% "scalatest" % "3.0.0-M16-SNAP1" % "test",
+    "org.scalatest" %% "scalatest" % "3.0.0-RC2" % "test",
     "com.typesafe.play" %% "play-test" % playVersion % "test",
     "com.typesafe.play" %% "play-ws" % playVersion % "test",
     "com.typesafe.play" %% "play-akka-http-server-experimental" % playVersion % "test"
