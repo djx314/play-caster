@@ -18,14 +18,14 @@ credentials += Credentials("Sonatype Nexus",
 
 name := "play-caster"
 
-version := "0.3.1-M2"
+version := "0.3.1-M3"
 
 scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= {
-  val playVersion = "2.5.4"
-  val circeVersion = "0.5.0-M2"
+  val playVersion = "2.5.6"
+  val circeVersion = "0.5.0-M3"
   //val shapelessVersion = "2.3.0"
   Seq(
     "io.circe" %% "circe-core" % circeVersion,
